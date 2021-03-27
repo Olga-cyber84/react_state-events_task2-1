@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function ProjectList({img, category}) {
+function ProjectList({projects, selected}) {
+    const selected_category = projects.filter(project => selected === "All" ? projects : project["category"] === selected);
     return (
         <div>
-            {
-                img.map((item, i) => 
+            { 
+                selected_category.map((project, i) => 
                     <img
                         key={i}
-                        src={item}
-                        className={category[i]}
+                        src={project["img"]}
+                        alt={`Portfolio ${i}`}
+                        className={project["category"]}
                         style={{margin: "20px 0 0 10px"}}
                     />      
                 )
@@ -19,7 +21,9 @@ function ProjectList({img, category}) {
 }
 
 ProjectList.propTypes = {
-
+    projects: PropTypes.array.isRequired,
+    selected: PropTypes.string.isRequired,
+    selected_category: PropTypes.array
 }
 
 export default ProjectList
